@@ -16,7 +16,21 @@ def histogram(filename):
 
   return histogram
 
+def unique_words(histogram):
+  # return the length of the dictionary
+  return len(histogram)
+
+def frequency(word, histogram):
+  return histogram.get(word, f'Inputted word "{word}" not found in histogram.')
+
+
 
 if __name__ == '__main__':
     histogram = histogram('histogram_text.txt')
     print(histogram)
+
+    unique_count = unique_words(histogram)
+    print(unique_count)
+
+    frequency_count = frequency("pusheen", histogram)
+    print(frequency_count)

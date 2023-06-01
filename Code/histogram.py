@@ -13,7 +13,6 @@ def histogram(filename):
       else:
         # add new word count
         histogram[word] = 1
-
   return histogram
 
 def unique_words(histogram):
@@ -21,6 +20,7 @@ def unique_words(histogram):
   return len(histogram)
 
 def frequency(word, histogram):
+  # find word in histogram, else return error statement.
   return histogram.get(word, f'Inputted word "{word}" not found in histogram.')
 
 

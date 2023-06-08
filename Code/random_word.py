@@ -21,23 +21,36 @@ def weighted_word(histogram):
 
   return random_word
 
+def random_sentence(histogram):
+  new_sentence = []
+  word_count = random.randrange(15, 30)
+  for i in range(word_count):
+    # select random word
+    rand_word = weighted_word(histogram)
+    # capitalize first letter
+    if len(new_sentence) == word_count - 1:
+      rand_word += "."
+    new_sentence.append(rand_word)
+  return " ".join(new_sentence).capitalize()
+
+
 if __name__ == '__main__':
   # create histogram and initialize stats counter
   count = {}
   histogram = histogram(sys.argv)
+
+  sentence = random_sentence(histogram)
+  print(sentence + "\n")
 
   # evaluate run time
   total_time = 0
   iterations = 10000
 
   for i in range(iterations):
-    elapsed_time = timeit.timeit(lambda: weighted_word(histogram), number=1)
+    elapsed_time = timeit.timeit(lambda: random_sentence(histogram), number=1)
     total_time += elapsed_time
 
   print(f'Total run time: {total_time}.\n')
-
-
-
 
   def counter(word):
     if count.get(word):

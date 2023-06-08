@@ -23,7 +23,7 @@ def histogram(args):
           histogram[word] = 1
     return histogram
   else:
-    return "Please input valid filename as command line argument."
+    raise Exception("Please input valid filename as command line argument.")
 
 
 

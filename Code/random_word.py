@@ -37,7 +37,7 @@ def random_sentence(histogram):
 if __name__ == '__main__':
   # create histogram and initialize stats counter
   count = {}
-  histogram = histogram(sys.argv)
+  histogram = histogram("michael_scott.txt")
 
   sentence = random_sentence(histogram)
   print(sentence + "\n")

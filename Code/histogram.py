@@ -2,30 +2,24 @@ import sys
 import timeit
 import string
 
-def histogram(args):
+def histogram(filename):
   # initialize empty histogram
   histogram = {}
   # verify command line args.
-  if len(args) == 2:
-    filename = args[1]
     # take filename and open as file
-    with open(filename) as file:
-      # read file, remove puncuation, and convert to array
-      word_list = file.read().translate(str.maketrans('', '', string.punctuation)).lower().split()
+  with open(filename) as file:
+    # read file, remove puncuation, and convert to array
+    word_list = file.read().translate(str.maketrans('', '', string.punctuation)).lower().split()
 
-      # loop through words
-      for word in word_list:
-        # increment if word exists
-        if histogram.get(word):
-          histogram[word] += 1
-        else:
-          # add new word count
-          histogram[word] = 1
-    return histogram
-  else:
-    raise Exception("Please input valid filename as command line argument.")
-
-
+    # loop through words
+    for word in word_list:
+      # increment if word exists
+      if histogram.get(word):
+        histogram[word] += 1
+      else:
+        # add new word count
+        histogram[word] = 1
+  return histogram
 
 def unique_words(histogram):
   # return the length of the dictionary
@@ -47,13 +41,13 @@ if __name__ == '__main__':
 
   # timeit takes callable func as arg, lambda is anon one line function.
   for i in range(iterations):
-    elapsed_time = timeit.timeit(lambda: histogram(sys.argv), number=1)
+    elapsed_time = timeit.timeit(lambda: histogram("michael_scott.txt"), number=1)
     total_time += elapsed_time
   # avg_time = total_time / iterations
 
   print(f'Total run time: {total_time}.\n')
 
-  histogram = histogram(sys.argv)
+  histogram = histogram("michael_scott.txt")
 
   unique_count = unique_words(histogram)
   print(f'Unique Words: {unique_count}')

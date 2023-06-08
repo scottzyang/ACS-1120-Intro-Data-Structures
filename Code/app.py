@@ -10,11 +10,11 @@ app = Flask(__name__)
 # TODO: Initialize your histogram, hash table, or markov chain here.
 # Any code placed here will run only once, when the server starts.
 histo = histogram("michael_scott.txt")
-sentence = random_sentence(histo)
 
 @app.route("/")
 def home():
     """Route that returns a web page containing the generated text."""
+    sentence = random_sentence(histo)
     return f'<p>{sentence}</p>'
 
 

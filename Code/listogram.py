@@ -2,6 +2,7 @@
 
 from __future__ import division, print_function  # Python 2 and 3 compatibility
 import random
+from collections import defaultdict
 
 
 class Listogram(list):
@@ -21,24 +22,64 @@ class Listogram(list):
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
         # TODO: Increase word frequency by count
+        # loop through entries in listogram
+            # if entry found, increment count
+        if self.__contains__(word):
+            index = self.index_of(word)
+            update_freq = self[index][1] + count
+            self[index] = [word, update_freq]
+            self.tokens += count
+            return
+        # if no entry found, create new entry
+        self.append([word, count])
+        self.types += 1
+        self.tokens += count
+
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
+        if self.__contains__(word):
+            index = self.index_of(word)
+            return self[index][1]
+        else:
+            return 0
+
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
         # TODO: Check if word is in this histogram
+        for entry in self:
+            if entry[0] == word:
+                return True
+        return False
 
     def index_of(self, target):
         """Return the index of entry containing given target word if found in
         this histogram, or None if target word is not found."""
         # TODO: Implement linear search to find index of entry with target word
+        for index, entry in enumerate(self):
+            if target == entry[0]:
+                return index
 
     def sample(self):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
         # TODO: Randomly choose a word based on its frequency in this histogram
+        # this grabs a word based on weight, since the "timeline" represents the word count, and each word has a larger "section"
+        # A word with a larger "section" has higher chance of being selected.
+        # generate random number on timeline of tokens
+        dart = random.randint(1, self.tokens)
+        # start fence from beginning
+        fence = 0
+
+        for word, count in self:
+            # increase fence by count in listogram
+            fence += count
+            # if fence equal or larger, then select.
+            if fence >= dart:
+                return word
+
 
 
 def print_histogram(word_list):

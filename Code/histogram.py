@@ -1,6 +1,7 @@
 import sys
 import timeit
 import string
+from collections import defaultdict
 
 def histogram(filename):
   # initialize empty histogram
@@ -23,21 +24,24 @@ def histogram(filename):
 
 def unique_words(histogram):
   # return the length of the dictionary
-  if type(histogram) is dict:
-    return len(histogram)
-  return
+  return len(histogram)
 
 def frequency(word, histogram):
   # find word in histogram, else return error statement.
-  if type(histogram) is dict:
-    return histogram.get(word, f'Inputted word "{word}" not found in histogram.')
-  return
+  # if type(histogram) is list:
+  #   for entry in histogram:
+  #     if entry[0] == word:
+  #       return entry[1]
+  # return f'Inputted word "{word}" was not found in histogram.'
+  freq_dict = defaultdict(int)
+  freq_dict.update(histogram)
+  return freq_dict.get(word, 0)
 
 
 
 if __name__ == '__main__':
   total_time = 0
-  iterations = 10000
+  iterations = 10
 
   # timeit takes callable func as arg, lambda is anon one line function.
   for i in range(iterations):

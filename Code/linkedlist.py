@@ -90,6 +90,7 @@ class LinkedList:
             new_node.next = self.head
             self.head = new_node
         else:
+            # if it is empty, simply append to list.
             self.append(item)
 
     def find(self, matcher):
@@ -111,6 +112,49 @@ class LinkedList:
         TODO: Best case running time: O(???) Why and under what conditions?
         TODO: Worst case running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes to find one whose data matches given item
+        current_node = self.head
+
+        # if head is empty
+        if self.head is None:
+            raise ValueError("List is empty.")
+
+        # if item matches head
+        if self.head and self.tail:
+            if self.head.data is item:
+                self.head = current_node.next
+
+                if self.tail.data is item:
+                    self.tail = None
+                return
+
+        # logic is always evaluating one node ahead, cannot loop until end of list.
+        while current_node.next is not None:
+            # check if next node data matches item
+            if current_node.next.data == item:
+                # check if last node is same as the next node
+                if self.tail == current_node.next:
+                    self.tail = current_node
+                # set current node ref to ref from next node, if last element set to None.
+                current_node.next = current_node.next.next
+                return
+            else:
+                # change node to next node
+                current_node = current_node.next
+
+        raise ValueError('Item not found: {}'.format(item))
+
+    def replace(self, match, replacement):
+        current_node = self.head
+
+        # loop to find match
+        while current_node is not None:
+            # if match, replace data
+            if current_node.data is match:
+                current_node.data = replacement
+            else:
+                # move to next node
+                current_node = current_node.next
+
 
 
 def test_linked_list():

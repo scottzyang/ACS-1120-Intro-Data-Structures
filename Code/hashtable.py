@@ -66,8 +66,7 @@ class HashTable(object):
         bucket_counter = 0
         # TODO: Loop through all buckets
         for bucket in self.buckets:
-            for entries in bucket.items():
-                bucket_counter += 1
+            bucket_counter += bucket.length()
         return bucket_counter
         # TODO: Count number of key-value entries in each bucket
 
@@ -99,32 +98,36 @@ class HashTable(object):
     def set(self, key, value):
         """Insert or update the given key with its associated value.
         TODO: Running time: O(???) Why and under what conditions?"""
-        if self.contains(key):
-            for bucket in self.buckets:
-                for entry_key, entry_value in bucket.items():
-                    if entry_key == key:
-                        bucket.replace((entry_key, entry_value), (key, value))
-                        return
-        else:
-            self.buckets[self._bucket_index(key)].append((key, value))
-            return
-        # TODO: Find bucket where given key belongs
-        # TODO: Check if key-value entry exists in bucket
-        # TODO: If found, update value associated with given key
-        # TODO: Otherwise, insert given key-value entry into bucket
+        bucket = self.buckets[self._bucket_index(key)]
+        for entry in bucket.items():
+            if entry[0] == key:
+                self.delete(key)
+
+        bucket.append((key, value))
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
         TODO: Running time: O(???) Why and under what conditions?"""
-        if self.contains(key):
-            self.buckets[self._bucket_index(key)].delete(key)
-        else:
-            raise KeyError('Key not found: {}'.format(key))
-        # TODO: Find bucket where given key belongs
-        # TODO: Check if key-value entry exists in bucket
-        # TODO: If found, delete entry associated with given key
-        # TODO: Otherwise, raise error to tell user delete failed
-        # Hint: raise KeyError('Key not found: {}'.format(key))
+        bucket = self.buckets[self._bucket_index(key)]
+
+        previous = None
+        current = bucket.head
+
+        while current is not None:
+            # if key matches and previous is none
+            if current.data[0] == key:
+                if not previous:
+                    # set bucket head to next one of current
+                    bucket.head = current.next
+                else:
+                    # set previous next to current next
+                    previous.next = current.next
+                return
+
+            # set new previous and current for next iteration
+            previous = current
+            current = current.next
+        raise KeyError('Key not found: {}'.format(key))
 
 def test_hash_table():
     ht = HashTable()

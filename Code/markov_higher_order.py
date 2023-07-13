@@ -57,7 +57,7 @@ class Markovgram():
     # convert tuple to list and append to sentence
     self.random_sentence.extend(current_tuple)
     # random sentence length
-    word_count = random.randrange(15, 35)
+    word_count = random.randrange(15, 20)
 
     for i in range(word_count):
       # find current tuple in MC

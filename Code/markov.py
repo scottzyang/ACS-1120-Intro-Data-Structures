@@ -26,6 +26,7 @@ class Markovgram():
 
       # check if curr key exists in prev key
       if index != 0:
+        # grab previous markov entry using last index
         previous_entries = self.markov_chain.get(self.words_list[index - 1])
         # checking if word exist in entries
         if previous_entries.get(word):

@@ -6,7 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tweet Generator</title>
 </head>
+<header>
+  <h1>1984 Generator</h1>
+</header>
 <body>
-    <blockquote>TODO: Replace this text with the sentence you generated!</blockquote>
+  <form action="/" method="post">
+    <label for="order">Select Order:</label>
+    <input type="range" id="order" name="order" min="0" max="10" step="1">
+    <br>
+    <output for="order" id="order-value">5</output>
+    <br>
+    <input type="submit" value="Generate Sentence">
+  </form>
+    <blockquote>{{ sentence }}</blockquote>
 </body>
+<script>
+  let orderInput = document.getElementById("order");
+  let orderValue = document.getElementById("order-value");
+
+  orderInput.addEventListener("input", function() {
+    orderValue.innerText = orderInput.value;
+  });
+</script>
 </html>

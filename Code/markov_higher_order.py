@@ -81,10 +81,12 @@ class Markovgram():
     self.random_sentence = " ".join(self.random_sentence).capitalize() + "."
 
 if __name__ == '__main__':
-  fishy = Markovgram("twilight.txt", 8)
+  fishy = Markovgram("stats.txt", 0)
 
   # # print(fishy.words_list)
   fishy.generate_markov_chain()
+
+  print(fishy.markov_chain)
 
   fishy.create_sentence()
 

@@ -1,5 +1,5 @@
 """Main script, uses other modules to generate sentences."""
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from markov_higher_order import Markovgram
 from flask import Flask
 import sys
@@ -11,14 +11,18 @@ app = Flask(__name__)
 # Any code placed here will run only once, when the server starts.
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
     """Route that returns a web page containing the generated text."""
-    markovgram = Markovgram("twilight.txt", 5)
-    markovgram.generate_markov_chain()
-    markovgram.create_sentence()
-    sentence = markovgram.random_sentence
-    return f'<p>{sentence}</p>'
+    if request.method == "POST":
+        order = int(request.form["order"])
+        markovgram = Markovgram("1984.txt", order)
+        markovgram.generate_markov_chain()
+        markovgram.create_sentence()
+        sentence = markovgram.random_sentence
+    else:
+        sentence = ""
+    return render_template("index.html", sentence=sentence)
 
 
 if __name__ == "__main__":
